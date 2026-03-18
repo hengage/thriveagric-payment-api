@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { contractsRouter } from '../domain/contracts';
 
 export class Routes {
   public router: Router;
@@ -9,6 +10,6 @@ export class Routes {
   }
 
   private initializeRoutes() {
-    // Domain routes will be registered here
+    this.router.use('/contracts', contractsRouter);
   }
 }
