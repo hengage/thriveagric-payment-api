@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, Default } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, Default, Index } from 'sequelize-typescript';
 import { Contract } from '../contracts/contract.model';
 
 @Table({ tableName: 'jobs', timestamps: false })
@@ -10,9 +10,11 @@ export class Job extends Model {
   declare price: bigint;
 
   @Default(false)
+  @Index
   @Column(DataType.BOOLEAN)
   declare paid: boolean;
 
+  @Index
   @Column(DataType.DATE)
   declare paymentDate: Date | null;
 
