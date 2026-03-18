@@ -21,6 +21,19 @@ export const jobsRepository = {
     });
   },
 
+  async findAllUnpaidForClient(clientId: number): Promise<Job[]> {
+    return Job.findAll({
+      where: { paid: false },
+      include: [{
+        model: Contract,
+        where: {
+          status: ContractStatus.IN_PROGRESS,
+          clientId,
+        },
+      }],
+    });
+  },
+
   async findByIdWithContractOrThrow(jobId: number, t?: Transaction): Promise<Job> {
     const job = await Job.findOne({
       where: { id: jobId },

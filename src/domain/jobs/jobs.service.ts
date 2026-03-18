@@ -44,6 +44,11 @@ export const jobsService = {
     return jobs.map(serializeJob);
   },
 
+  async getTotalUnpaidForClient(clientId: number): Promise<bigint> {
+    const jobs = await jobsRepository.findAllUnpaidForClient(clientId);
+    return jobs.reduce((sum, job) => sum + job.price, BigInt(0));
+  },
+
   async payJob(jobId: number, clientProfileId: number, idempotencyKey: string) {
     return sequelize.transaction(async (t) => {
       const job = await jobsRepository.findByIdWithContractOrThrow(jobId, t);
