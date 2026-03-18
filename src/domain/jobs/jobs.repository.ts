@@ -8,7 +8,7 @@ import { HTTP_STATUS } from '../../constants/httpStatus';
 import { MESSAGES } from '../../utils/messages';
 
 export const jobsRepository = {
-  async findUnpaidForProfile(profileId: number): Promise<Job[]> {
+  async findUnpaidFromActiveContracts(profileId: number): Promise<Job[]> {
     return Job.findAll({
       where: { paid: false },
       include: [{
@@ -16,6 +16,19 @@ export const jobsRepository = {
         where: {
           status: ContractStatus.IN_PROGRESS,
           [Op.or]: [{ clientId: profileId }, { contractorId: profileId }],
+        },
+      }],
+    });
+  },
+
+  async findAllUnpaidForClient(clientId: number): Promise<Job[]> {
+    return Job.findAll({
+      where: { paid: false },
+      include: [{
+        model: Contract,
+        where: {
+          status: ContractStatus.IN_PROGRESS,
+          clientId,
         },
       }],
     });

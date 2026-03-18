@@ -40,8 +40,13 @@ const validateSufficientBalance = (client: Profile, jobPrice: bigint) => {
 
 export const jobsService = {
   async getUnpaidJobs(profileId: number) {
-    const jobs = await jobsRepository.findUnpaidForProfile(profileId);
+    const jobs = await jobsRepository.findUnpaidFromActiveContracts(profileId);
     return jobs.map(serializeJob);
+  },
+
+  async getTotalUnpaidForClient(clientId: number): Promise<bigint> {
+    const jobs = await jobsRepository.findAllUnpaidForClient(clientId);
+    return jobs.reduce((sum, job) => sum + job.price, BigInt(0));
   },
 
   async payJob(jobId: number, clientProfileId: number, idempotencyKey: string) {
