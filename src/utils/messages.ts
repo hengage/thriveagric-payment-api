@@ -18,7 +18,7 @@ export const MESSAGES = {
   },
   DEPOSIT: {
     LIMIT_EXCEEDED: (limit: number) =>
-      `Deposit amount exceeds the maximum allowed (25% of unpaid jobs = ${toMajorUnits(BigInt(limit))})`,
+      `Deposit amount exceeds the maximum allowed (25% of unpaid jobs = ${toMajorUnits(limit)})`,
     SUCCESS: 'Deposit completed successfully',
   },
   AUTH: {

@@ -1,11 +1,18 @@
 import { Router } from 'express';
-import { generalLimiter } from '../../middleware/rateLimit.middleware';
-import { getProfile } from '../../middleware/auth.middleware';
+import { getProfile, generalLimiter, checkIdempotency } from '../../middleware';
 import { profilesController } from './profiles.controller';
+import { validateDepositParams, validateDepositBody } from './profiles.validation';
 
 const router = Router();
 
-// TODO: define routes
-// router.get('/', generalLimiter, getProfile, profilesController.getAll);
+router.post(
+  '/deposit/:userId',
+  generalLimiter,
+  getProfile,
+  checkIdempotency,
+  validateDepositParams,
+  validateDepositBody,
+  profilesController.deposit
+);
 
 export { router as profilesRouter };

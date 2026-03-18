@@ -7,6 +7,7 @@ import { HTTP_STATUS } from '../../constants/httpStatus';
 import { MESSAGES } from '../../utils/messages';
 import { ProfileType } from '../../constants/enums';
 import { Profile } from './profile.model';
+import { toMajorUnits } from '../../utils/money.utils';
 
 const validateClientType = (profile: Profile) => {
   if (profile.type !== ProfileType.CLIENT) {
@@ -18,30 +19,30 @@ const validateClientType = (profile: Profile) => {
   }
 };
 
-const validateDepositLimit = (amount: bigint, maxDeposit: bigint) => {
+const validateDepositLimit = (amount: number, maxDeposit: number) => {
   if (amount > maxDeposit) {
     throw new HandleException(
       HTTP_STATUS.BAD_REQUEST.code,
-      MESSAGES.DEPOSIT.LIMIT_EXCEEDED(Number(maxDeposit)),
+      MESSAGES.DEPOSIT.LIMIT_EXCEEDED(maxDeposit),
       HTTP_STATUS.BAD_REQUEST.name
     );
   }
 };
 
 export const profilesService = {
-  async deposit(userId: number, amount: bigint, idempotencyKey: string) {
+  async deposit(userId: number, amount: number, idempotencyKey: string) {
     return sequelize.transaction(async (t) => {
       const profile = await profilesRepository.findByIdLockedOrThrow(userId, t);
       validateClientType(profile);
 
       const totalUnpaid = await jobsService.getTotalUnpaidForClient(userId);
-      const maxDeposit = (totalUnpaid * BigInt(25)) / BigInt(100);
+      const maxDeposit = Math.floor((totalUnpaid * 25) / 100);
       validateDepositLimit(amount, maxDeposit);
 
       await profilesRepository.incrementBalance(userId, amount, t);
       await profile.reload({ transaction: t });
 
-      const result = { balance: Number(profile.balance) / 100 };
+      const result = { balance: toMajorUnits(profile.balance) };
 
       await idempotencyRepository.create(
         idempotencyKey,
