@@ -1,0 +1,18 @@
+export const JOI_VALIDATION_CODES = {
+  STRING_EMAIL:              'string.email',
+  STRING_PATTERN_BASE:       'string.pattern.base',
+  ANY_REQUIRED:              'any.required',
+  STRING_MIN:                'string.min',
+  STRING_MAX:                'string.max',
+  STRING_ISO_DATE:           'string.isoDate',
+  STRING_LENGTH:             'string.length',
+  ANY_UNKNOWN:               'any.unknown',
+  ANY_ONLY:                  'any.only',
+  ALTS_MATCH:                'alternatives.match',
+  STRING_EMPTY:              'string.empty',
+  STRING_BASE:               'string.base',
+  NUMBER_BASE:               'number.base',
+  BOOLEAN_BASE:              'boolean.base',
+  ARRAY_MIN:                 'array.min',
+  CUSTOM_END_TIME_AFTER_START: 'custom.endTimeAfterStart',
+} as const;
