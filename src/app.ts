@@ -15,7 +15,7 @@ app.use(express.json());
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 const routes = new Routes();
-app.use('/', routes.router);
+app.use('/api', routes.router);
 
 // ─── Error handling ───────────────────────────────────────────────────────────
 app.use(notFound);
