@@ -33,11 +33,11 @@ export const profilesRepository = {
     return profile;
   },
 
-  async decrementBalance(id: number, amount: bigint, t: Transaction): Promise<void> {
+  async decrementBalance(id: number, amount: number, t: Transaction): Promise<void> {
     await Profile.decrement('balance', { by: Number(amount), where: { id }, transaction: t });
   },
 
-  async incrementBalance(id: number, amount: bigint, t: Transaction): Promise<void> {
+  async incrementBalance(id: number, amount: number, t: Transaction): Promise<void> {
     await Profile.increment('balance', { by: Number(amount), where: { id }, transaction: t });
   },
 };

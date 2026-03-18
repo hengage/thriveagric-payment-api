@@ -24,7 +24,7 @@ export const checkIdempotency = async (
     const currentResourceId = req.params.job_id || req.params.userId;
     
     if (existingKey.resourceId === Number(currentResourceId)) {
-      return res.status(200).json(existingKey.response);
+      return res.status(HTTP_STATUS.OK.code).json(existingKey.response);
     }
     
     throw new HandleException(

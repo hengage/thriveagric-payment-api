@@ -7,7 +7,7 @@ export class Job extends Model {
   declare description: string;
 
   @Column(DataType.BIGINT)
-  declare price: bigint;
+  declare price: number;
 
   @Default(false)
   @Index
