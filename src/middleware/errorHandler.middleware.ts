@@ -18,6 +18,8 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.error('Error caught by global handler:', err);
+  
   const error = err instanceof HandleException
     ? err
     : new HandleException(

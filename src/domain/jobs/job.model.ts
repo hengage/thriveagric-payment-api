@@ -4,23 +4,22 @@ import { Contract } from '../contracts/contract.model';
 @Table({ tableName: 'jobs', timestamps: false })
 export class Job extends Model {
   @Column(DataType.TEXT)
-  description!: string;
+  declare description: string;
 
   @Column(DataType.BIGINT)
-  price!: bigint;
+  declare price: bigint;
 
   @Default(false)
   @Column(DataType.BOOLEAN)
-  paid!: boolean;
+  declare paid: boolean;
 
   @Column(DataType.DATE)
-  paymentDate!: Date | null;
+  declare paymentDate: Date | null;
 
   @ForeignKey(() => Contract)
   @Column
-  contractId!: number;
+  declare contractId: number;
 
   @BelongsTo(() => Contract)
-  contract!: Contract;
+  declare contract: Contract;
 }
-
