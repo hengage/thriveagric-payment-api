@@ -1,6 +1,7 @@
 import { sequelize } from '../../config/db';
 import { jobsRepository } from './jobs.repository';
 import { profilesRepository } from '../profiles/profiles.repository';
+import { idempotencyRepository } from '../../common/idempotency';
 import { HandleException } from '../../utils/handleException.utils';
 import { HTTP_STATUS } from '../../constants/httpStatus';
 import { MESSAGES } from '../../utils/messages';
@@ -59,7 +60,13 @@ export const jobsService = {
 
       const result = serializeJob(job);
 
-      // TODO: Store idempotency key after implementing idempotency repository
+      await idempotencyRepository.create(
+        idempotencyKey,
+        'job_payment',
+        jobId,
+        { status: 'success', data: result },
+        t
+      );
 
       return result;
     });

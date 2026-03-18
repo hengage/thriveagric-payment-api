@@ -22,11 +22,10 @@ export const jobsController = {
 
   async payJob(req: Request, res: Response) {
     try {
-      const idempotencyKey = req.headers['idempotency-key'] as string;
       const result = await jobsService.payJob(
         Number(req.params.job_id),
         req.profile.id,
-        idempotencyKey
+        req.idempotencyKey!
       );
       return res.status(HTTP_STATUS.OK.code).json(
         createSuccessResponse(MESSAGES.PAYMENT.SUCCESS, result)
