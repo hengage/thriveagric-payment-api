@@ -43,5 +43,6 @@ export const MESSAGES = {
     DATE_REQUIRED:    'Date is required',
     DATE_ISO:         'Date must be a valid ISO date string',
     LIMIT_NUMBER:     'Limit must be a number',
+    INVALID_NUMBER:   (field: string) => `${field} must be a valid positive number`,
   },
 } as const;
