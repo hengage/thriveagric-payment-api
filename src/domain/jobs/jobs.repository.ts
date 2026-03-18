@@ -8,7 +8,7 @@ import { HTTP_STATUS } from '../../constants/httpStatus';
 import { MESSAGES } from '../../utils/messages';
 
 export const jobsRepository = {
-  async findUnpaidForProfile(profileId: number): Promise<Job[]> {
+  async findUnpaidFromActiveContracts(profileId: number): Promise<Job[]> {
     return Job.findAll({
       where: { paid: false },
       include: [{
