@@ -10,8 +10,8 @@
   "start:dev": "ts-node-dev --respawn --transpile-only src/app.ts",
   "start":  "node dist/app.js",
   "build": "tsc",
-  "db:sync":  "ts-node src/db/sync.ts",
-  "seed": "ts-node src/db/seed.ts",
+  "db:sync":  "docker-compose exec api npx ts-node src/db/sync.ts",
+  "seed": "docker-compose exec api npx ts-node src/db/seed.ts",
   "scaffold": "ts-node scripts/scaffold-domain.ts",
   "test": "jest --runInBand --forceExit"
 },
