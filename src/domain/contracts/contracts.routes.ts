@@ -1,11 +1,10 @@
 import { Router } from 'express';
-import { generalLimiter } from '../../middleware/rateLimit.middleware';
-import { getProfile } from '../../middleware/auth.middleware';
 import { contractsController } from './contracts.controller';
+import {generalLimiter, getProfile} from '../../middleware';
 
 const router = Router();
 
-// TODO: define routes
-// router.get('/', generalLimiter, getProfile, contractsController.getAll);
+router.get('/:id', generalLimiter, getProfile, contractsController.getContractById);
+router.get('/', generalLimiter, getProfile, contractsController.getContracts);
 
 export { router as contractsRouter };

@@ -1,8 +1,11 @@
 import { contractsRepository } from './contracts.repository';
-import { HandleException } from '../../utils/handleException.utils';
-import { HTTP_STATUS } from '../../constants/httpStatus';
-import { MESSAGES } from '../../utils/messages';
 
 export const contractsService = {
-  // TODO: implement service methods
+  async getContractById(id: number, profileId: number) {
+    return contractsRepository.findByIdForProfile(id, profileId);
+  },
+
+  async getContracts(profileId: number) {
+    return contractsRepository.findAllForProfile(profileId);
+  },
 };

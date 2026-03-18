@@ -7,7 +7,7 @@
   "dev:build":  "docker-compose up --build --remove-orphans",
   "docker:down":  "docker-compose down",
   "docker:restart": "docker-compose restart",
-  "start:dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+  "start:dev": "ts-node-dev --respawn --transpile-only  --poll src/app.ts",
   "start":  "node dist/app.js",
   "build": "tsc",
   "db:sync":  "docker-compose exec api npx ts-node src/db/sync.ts",

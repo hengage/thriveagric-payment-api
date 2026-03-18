@@ -15,7 +15,17 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
         HTTP_STATUS.UNAUTHORIZED.name
       );
     }
-    req.profile = await profilesRepository.findByIdOrThrow(Number(profileId));
+    
+    const profileIdNum = Number(profileId);
+    if (isNaN(profileIdNum) || profileIdNum <= 0) {
+      throw new HandleException(
+        HTTP_STATUS.BAD_REQUEST.code,
+        MESSAGES.VALIDATION.INVALID_NUMBER('profile_id'),
+        HTTP_STATUS.BAD_REQUEST.name
+      );
+    }
+    
+    req.profile = await profilesRepository.findByIdOrThrow(profileIdNum);
     next();
   } catch (err) {
     const error = err as HandleException;
