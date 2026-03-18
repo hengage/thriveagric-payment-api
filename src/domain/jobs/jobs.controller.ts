@@ -1,18 +1,40 @@
 import { Request, Response } from 'express';
 import { jobsService } from './jobs.service';
-import { createSuccessResponse, createErrorResponse } from '../../utils/response.utils';
+import { createSuccessResponse, createErrorResponse } from '../../utils/api-response.utils';
 import { HTTP_STATUS } from '../../constants/httpStatus';
 import { MESSAGES } from '../../utils/messages';
 import { HandleException } from '../../utils/handleException.utils';
 
 export const jobsController = {
-  async getAll(req: Request, res: Response) {
+  async getUnpaidJobs(req: Request, res: Response) {
     try {
-      // const result = await jobsService.getAll();
-      // return res.status(HTTP_STATUS.OK.code).json(createSuccessResponse('Fetched successfully', result));
+      const jobs = await jobsService.getUnpaidJobs(req.profile.id);
+      return res.status(HTTP_STATUS.OK.code).json(
+        createSuccessResponse(MESSAGES.JOB.UNPAID_FETCHED, jobs)
+      );
     } catch (err) {
       const error = err as HandleException;
-      return res.status(error.status || HTTP_STATUS.SERVER_ERROR.code).json(createErrorResponse(error));
+      return res.status(error.status || HTTP_STATUS.SERVER_ERROR.code).json(
+        createErrorResponse(error)
+      );
+    }
+  },
+
+  async payJob(req: Request, res: Response) {
+    try {
+      const result = await jobsService.payJob(
+        Number(req.params.job_id),
+        req.profile.id,
+        req.idempotencyKey!
+      );
+      return res.status(HTTP_STATUS.OK.code).json(
+        createSuccessResponse(MESSAGES.PAYMENT.SUCCESS, result)
+      );
+    } catch (err) {
+      const error = err as HandleException;
+      return res.status(error.status || HTTP_STATUS.SERVER_ERROR.code).json(
+        createErrorResponse(error)
+      );
     }
   },
 };

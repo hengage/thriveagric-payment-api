@@ -4,18 +4,18 @@ import { ProfileType } from '../../constants/enums';
 @Table({ tableName: 'profiles', timestamps: false })
 export class Profile extends Model {
   @Column(DataType.STRING)
-  firstName!: string;
+  declare firstName: string;
 
   @Column(DataType.STRING)
-  lastName!: string;
+  declare lastName: string;
 
   @Column(DataType.STRING)
-  profession!: string;
+  declare profession: string;
 
   @Default(0)
   @Column(DataType.BIGINT)
-  balance!: bigint;
+  declare balance: bigint;
 
   @Column(DataType.ENUM(...Object.values(ProfileType)))
-  type!: ProfileType;
+  declare type: ProfileType;
 }
