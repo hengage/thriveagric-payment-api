@@ -28,7 +28,7 @@ const validateJobPayment = (job: Job, clientProfileId: number) => {
   }
 };
 
-const validateSufficientBalance = (client: Profile, jobPrice: bigint) => {
+const validateSufficientBalance = (client: Profile, jobPrice: number) => {
   if (client.balance < jobPrice) {
     throw new HandleException(
       HTTP_STATUS.UNPROCESSABLE.code,
@@ -44,9 +44,9 @@ export const jobsService = {
     return jobs.map(serializeJob);
   },
 
-  async getTotalUnpaidForClient(clientId: number): Promise<bigint> {
+  async getTotalUnpaidForClient(clientId: number): Promise<number> {
     const jobs = await jobsRepository.findAllUnpaidForClient(clientId);
-    return jobs.reduce((sum, job) => sum + job.price, BigInt(0));
+    return jobs.reduce((sum, job) => sum + job.price, (0));
   },
 
   async payJob(jobId: number, clientProfileId: number, idempotencyKey: string) {

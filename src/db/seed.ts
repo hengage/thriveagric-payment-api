@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { sequelize } from '../config/db';
 import { Profile } from '../domain/profiles';
 import { Contract } from '../domain/contracts';
