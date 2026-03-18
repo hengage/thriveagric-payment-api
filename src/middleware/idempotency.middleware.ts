@@ -21,7 +21,17 @@ export const checkIdempotency = async (
   const existingKey = await idempotencyRepository.findByKey(idempotencyKey);
 
   if (existingKey) {
-    return res.status(200).json(existingKey.response);
+    const currentResourceId = req.params.job_id || req.params.userId;
+    
+    if (existingKey.resourceId === Number(currentResourceId)) {
+      return res.status(200).json(existingKey.response);
+    }
+    
+    throw new HandleException(
+      HTTP_STATUS.CONFLICT.code,
+      'Idempotency key already used for a different resource',
+      HTTP_STATUS.CONFLICT.name
+    );
   }
 
   req.idempotencyKey = idempotencyKey;
