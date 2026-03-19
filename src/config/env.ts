@@ -8,6 +8,8 @@ export enum NodeEnv {
 export const ENV = {
   DATABASE_URL: process.env.DATABASE_URL!,
   TEST_DATABASE_URL: process.env.TEST_DATABASE_URL,
+  DATABASE_SSL_MODE: process.env.DATABASE_SSL_MODE,
+  DATABASE_SSL_ROOT_CERT: process.env.DATABASE_SSL_ROOT_CERT,
   NODE_ENV: (process.env.NODE_ENV ?? NodeEnv.DEVELOPMENT) as NodeEnv,
   PORT: Number(process.env.PORT ?? 3001),
   DEPOSIT_LIMIT_RATIO: Number(process.env.DEPOSIT_LIMIT_RATIO ?? 0.25),
