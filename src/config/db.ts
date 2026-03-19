@@ -9,23 +9,30 @@ const dbUrl =
   ENV.NODE_ENV === NodeEnv.TEST ? ENV.TEST_DATABASE_URL : ENV.DATABASE_URL;
 
 const getSslConfig = () => {
-  // 1. If SSL isn't required, turn it off immediately
-  if (ENV.DATABASE_SSL_MODE !== 'require') {
-    return false;
-  }
-
-  // 2. If SSL is required, check if we have a specific certificate
-  if (ENV.DATABASE_SSL_ROOT_CERT) {
+  // In production, always enable SSL
+  if (ENV.NODE_ENV === NodeEnv.PRODUCTION) {
+    // If we have a specific certificate, use strict mode
+    if (ENV.DATABASE_SSL_ROOT_CERT) {
+      return {
+        ca: ENV.DATABASE_SSL_ROOT_CERT,
+        rejectUnauthorized: true,
+      };
+    }
+    // Otherwise accept self-signed certs
     return {
-      ca: ENV.DATABASE_SSL_ROOT_CERT,
-      rejectUnauthorized: true, // Strict mode: verified by CA
+      rejectUnauthorized: false,
     };
   }
 
-  // 3. SSL required but no cert provided - accept self-signed
-  return {
-    rejectUnauthorized: false,
-  };
+  // In development/test, check if SSL is explicitly required
+  if (ENV.DATABASE_SSL_MODE === 'require') {
+    return {
+      rejectUnauthorized: false,
+    };
+  }
+
+  // Default: no SSL
+  return false;
 };
 
 export const sequelize = new Sequelize(dbUrl!, {
