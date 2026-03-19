@@ -24,7 +24,7 @@
 
 ```bash
 git clone <repo-url>
-cd payment-api
+cd thriveagric-payment-api
 
 cp .env.example .env
 # Fill in any values you want to change — defaults work out of the box with Docker
@@ -32,7 +32,7 @@ cp .env.example .env
 docker-compose up --build
 ```
 
-The container runs `db:sync` → `seed` → `start:prod` automatically on startup. The API will be available at `http://localhost:3001`.
+The container runs `db:sync` → `seed` → `start:dev` automatically on startup. The API will be available at `http://localhost:3001`.
 
 ### Without Docker (local Postgres required)
 
@@ -54,8 +54,9 @@ npm run dev         # starts ts-node-dev with hot reload
 
 ```bash
 # Requires a separate test database
-DATABASE_URL=postgres://postgres:password@localhost:5432/payment_api_test npm test
+DATABASE_URL=postgres://postgres:password@localhost:5432/thriveagric-payment-api
 ```
+`npm run test`
 
 Tests run serially (`--runInBand`) to avoid race conditions between suites sharing the same database.
 
@@ -78,7 +79,7 @@ Copy `.env.example` to `.env`. All variables have sensible defaults except `DATA
 
 ```bash
 # .env.example
-DATABASE_URL=postgres://postgres:password@localhost:5432/payment_api
+DATABASE_URL=postgres://postgres:password@localhost:5432/thriveagric-payment-api
 NODE_ENV=development
 PORT=3001
 DEPOSIT_LIMIT_RATIO=0.25
