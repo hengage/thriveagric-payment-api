@@ -14,7 +14,7 @@ const getSslConfig = () => {
     // If we have a specific certificate, use strict mode
     if (ENV.DATABASE_SSL_ROOT_CERT) {
       return {
-        ca: ENV.DATABASE_SSL_ROOT_CERT,
+        ca: ENV.DATABASE_SSL_ROOT_CERT.replace(/\\n/g, '\n'),
         rejectUnauthorized: true,
       };
     }
