@@ -18,6 +18,7 @@ export class Job extends Model {
   @Column(DataType.DATE)
   declare paymentDate: Date | null;
 
+  @Index
   @ForeignKey(() => Contract)
   @Column
   declare contractId: number;

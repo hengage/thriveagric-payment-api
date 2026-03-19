@@ -10,6 +10,7 @@ export class IdempotencyKey extends Model {
   @Column(DataType.STRING)
   declare resource: string;
 
+  @Index
   @Column(DataType.INTEGER)
   declare resourceId: number;
 
