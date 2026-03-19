@@ -3,25 +3,24 @@
   "version": "1.0.0",
   "main": "dist/app.js",
   "scripts": {
-  "dev":  "docker-compose up --remove-orphans",
-  "dev:build":  "docker-compose up --build --remove-orphans",
-  "docker:down":  "docker-compose down",
-  "docker:restart": "docker-compose restart",
-  "start:dev": "ts-node-dev --respawn --transpile-only  --poll src/app.ts",
-  "start":  "node dist/app.js",
-  "build": "tsc",
-  "db:sync":  "docker-compose exec api npx ts-node --files src/db/sync.ts",
-  "seed": "docker-compose exec api npx ts-node --files src/db/seed.ts",
-  "scaffold": "ts-node scripts/scaffold-domain.ts",
-  "test": "jest --runInBand --forceExit"
-},
+    "dev": "docker-compose up --remove-orphans",
+    "dev:build": "docker-compose up --build --remove-orphans",
+    "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose restart",
+    "start:dev": "ts-node-dev --respawn --transpile-only  --poll src/app.ts",
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "db:sync": "docker-compose exec api npx ts-node --files src/db/sync.ts",
+    "seed": "docker-compose exec api npx ts-node --files src/db/seed.ts",
+    "scaffold": "ts-node scripts/scaffold-domain.ts",
+    "test": "cross-env NODE_ENV=test jest --runInBand --forceExit"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.1",
     "http-errors": "^2.0.1",
@@ -39,10 +38,23 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^25.5.0",
     "@types/supertest": "^7.2.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.3.1",
     "jest": "^30.3.0",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.6",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "./tests/setup.ts"
+    ],
+    "testTimeout": 30000
   }
 }

@@ -4,7 +4,7 @@ import cors from 'cors';
 import { Routes } from './routes';
 import { sequelize } from './config/db';
 import corsOptions from './config/cors';
-import { ENV } from './config/env';
+import { ENV, NodeEnv } from './config/env';
 import { notFound, errorHandler } from './middleware';
 
 const app = express();
@@ -35,6 +35,8 @@ async function bootstrap() {
   }
 }
 
-bootstrap();
+if (ENV.NODE_ENV !== NodeEnv.TEST) {
+  bootstrap();
+}
 
 export { app };

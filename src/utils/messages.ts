@@ -24,10 +24,12 @@ export const MESSAGES = {
   AUTH: {
     MISSING_HEADER:  'Missing profile_id header',
     PROFILE_NOT_FOUND: 'Authenticated profile not found',
+    FORBIDDEN_DEPOSIT: 'You can only deposit to your own account',
   },
   IDEMPOTENCY: {
-    KEY_REQUIRED: 'Idempotency-Key header is required for this endpoint',
+    KEY_REQUIRED: 'Idempotency-Key header is required as an header',
     DUPLICATE:    'Duplicate request — returning cached response',
+    CONFLICT:     'Idempotency key already used for a different resource',
   },
   ADMIN: {
     BEST_PROFESSION: 'Best profession retrieved successfully',

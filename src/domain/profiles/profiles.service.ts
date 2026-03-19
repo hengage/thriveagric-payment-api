@@ -13,7 +13,7 @@ const validateClientType = (profile: Profile) => {
   if (profile.type !== ProfileType.CLIENT) {
     throw new HandleException(
       HTTP_STATUS.FORBIDDEN.code,
-      'Only clients can make deposits',
+      MESSAGES.AUTH.FORBIDDEN_DEPOSIT,
       HTTP_STATUS.FORBIDDEN.name
     );
   }
@@ -22,9 +22,9 @@ const validateClientType = (profile: Profile) => {
 const validateDepositLimit = (amount: number, maxDeposit: number) => {
   if (amount > maxDeposit) {
     throw new HandleException(
-      HTTP_STATUS.BAD_REQUEST.code,
+      HTTP_STATUS.UNPROCESSABLE.code,
       MESSAGES.DEPOSIT.LIMIT_EXCEEDED(maxDeposit),
-      HTTP_STATUS.BAD_REQUEST.name
+      HTTP_STATUS.UNPROCESSABLE.name
     );
   }
 };
