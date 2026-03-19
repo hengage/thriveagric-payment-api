@@ -46,7 +46,7 @@ export const jobsService = {
 
   async getTotalUnpaidForClient(clientId: number): Promise<number> {
     const jobs = await jobsRepository.findAllUnpaidForClient(clientId);
-    return jobs.reduce((sum, job) => sum + job.price, (0));
+    return jobs.reduce((sum, job) => sum + Number(job.price), (0));
   },
 
   async payJob(jobId: number, clientProfileId: number, idempotencyKey: string) {

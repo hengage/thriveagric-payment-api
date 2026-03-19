@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { idempotencyRepository } from '../common/idempotency';
 import { HandleException } from '../utils/handleException.utils';
 import { HTTP_STATUS } from '../constants/httpStatus';
+import { MESSAGES } from '../utils/messages';
 
 export const checkIdempotency = async (
   req: Request,
@@ -13,7 +14,7 @@ export const checkIdempotency = async (
   if (!idempotencyKey) {
     throw new HandleException(
       HTTP_STATUS.BAD_REQUEST.code,
-      'Idempotency-Key header is required',
+      MESSAGES.IDEMPOTENCY.KEY_REQUIRED,
       HTTP_STATUS.BAD_REQUEST.name
     );
   }
